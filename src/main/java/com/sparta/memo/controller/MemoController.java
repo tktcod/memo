@@ -28,6 +28,11 @@ public class MemoController {
         return memoService.getMemos();
     }
 
+    @GetMapping("memos/{id}")
+    public MemoResponseDto getMemo(@PathVariable Long id){
+        return memoService.getMemo(id);
+    }
+
     @PutMapping("/memos/{id}")
     public Long updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
         return memoService.updateMemo(id, requestDto);

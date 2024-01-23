@@ -36,6 +36,11 @@ public class MemoService {
         // DB 조회
         return memoRepository.findAllByOrderByModifiedAtDesc().stream().map(MemoResponseDto::new).toList();
     }
+    public MemoResponseDto getMemo(Long id) {
+        Memo memo = findMemo(id);
+        return new MemoResponseDto(memo);
+    }
+
     @Transactional
     public Long updateMemo(Long id, MemoRequestDto requestDto) {
         // 해당 메모가 DB에 존재하는지 확인
