@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MemoService {
@@ -39,19 +40,35 @@ public class MemoService {
     public Long updateMemo(Long id, MemoRequestDto requestDto) {
         // 해당 메모가 DB에 존재하는지 확인
         Memo memo = findMemo(id);
+
+        // 비밀번호 확인
+        boolean isPasswordCorrect = Objects.equals(requestDto.getPassword(), memo.getPassword());
+
         // memo 내용 수정
-        memo.update(requestDto);
+        if(isPasswordCorrect) {
+            memo.update(requestDto);
+        } else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
 
         return id;
 
     }
 
-    public Long deleteMemo(Long id) {
+    public Long deleteMemo(Long id, String password) {
         // 해당 메모가 DB에 존재하는지 확인
         Memo memo = findMemo(id);
 
+        // 비밀번호 확인
+        boolean isPasswordCorrect = Objects.equals(password, memo.getPassword());
+
         // memo 삭제
-        memoRepository.delete(memo);
+        if(isPasswordCorrect) {
+            memoRepository.delete(memo);
+        } else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
 
         return id;
 

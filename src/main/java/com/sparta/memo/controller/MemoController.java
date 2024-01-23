@@ -33,8 +33,8 @@ public class MemoController {
         return memoService.updateMemo(id, requestDto);
     }
 
-    @DeleteMapping("/memos/{id}")
-    public Long deleteMemo(@PathVariable Long id) {
-        return memoService.deleteMemo(id);
+    @DeleteMapping("/memos/{id}/{password}")
+    public Long deleteMemo(@PathVariable Long id, @PathVariable String password) {
+        return memoService.deleteMemo(id, password);
     }
 }
